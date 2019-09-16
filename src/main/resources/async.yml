@@ -1,0 +1,7 @@
+custom:
+  async:
+    corePoolSize: 5
+    queueCapacity: 100
+    maxPoolSize: 10
+    keepAlive: 30
+    threadNamePrefix: Async-

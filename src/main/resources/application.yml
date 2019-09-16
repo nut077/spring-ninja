@@ -1,0 +1,74 @@
+server:
+  port: 8080
+
+  compression:
+    #ทำการ compress เมื่อ response มี size มากว่า 1 KB
+    enabled: true
+    min-response-size: 5KB
+
+  http2:
+    #บอก spring boot ให้ เปิด http2
+    enabled: true
+
+  undertow:
+    accesslog:
+      #ให้ undertow เขียน log เมื่อมีการยิง request เข้ามาตามที่อยู่นี้
+      dir: undertow-accesslog
+      #log pattern
+      pattern: '%t %I %r %s %b %D'
+
+  servlet:
+    context-path: /javaverse
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+  datasource:
+    url: jdbc:h2:file:~/Course/H2/course-db;DB_CLOSE_DELAY=10;AUTO_RECONNECT=TRUE;CIPHER=AES;DB_CLOSE_ON_EXIT=FALSE; #DB_CLOSE_DELAY=10 ทันทีที่ connection ตัวสุดท้าย close ไป ให้รอ 10 วินาทีถึงจะทำการ close database เมื่อ CIPHER=AES คือการ database encode file
+    #url: C:/Course/H2/course-db;DB_CLOSE_DELAY=10;AUTO_RECONNECT=TRUE;CIPHER=AES;DB_CLOSE_ON_EXIT=FALSE; #DB_CLOSE_DELAY=10 ทันทีที่ connection ตัวสุดท้าย close ไป ให้รอ 10 วินาทีถึงจะทำการ close database เมื่อ CIPHER=AES คือการ database encode file
+    username: admin
+    password: abc 123
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop #create-drop สร้าง schema ต่างๆที่เราได้ทำใน entity และจำ destroy schema เมื่อทำการปิด project #สร้าง schema แต่ไม่ destroy
+    properties:
+      hibernate.format_sql: false #ให้ format อยู่ในรูปที่อ่านง่ายขึ้น default = false
+      hibernate.generate_statistics: false #วิเคราะได้ว่า query นี้ทำการเปิด ปิด connect เท่าไร จำนวนเวลา
+      hibernate.query.immutable_entity_update_query_handling_mode: exception  #(warning | exception) default is warning
+    open-in-view: false #defalut คือ true jpa จะเปิด session เมื่ออยู่หน้า view
+
+      #for handle 404 exception
+  mvc:
+    throw-exception-if-no-handler-found: true
+    log-resolved-exception: false
+  resources:
+    add-mappings: false
+
+
+  #เรียกใช้ @Profile ตามชื่อที่เราตั้งไว้ default คือ default
+  profiles:
+    #active: dev
+    #active: dev2
+    active:
+    #include: production2
+    include:
+
+#--- คือการประกาศตัวแปร
+---
+spring:
+  profiles: dev2
+custom:
+  name: nut-dev
+  email: nutdev@mail.com
+---
+spring:
+  profiles: production2
+custom:
+  name: nut-production
+  email: nutproduction@mail.com
+  tel: 02-3399421
