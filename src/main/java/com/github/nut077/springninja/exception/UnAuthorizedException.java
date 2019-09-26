@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 @Setter
 public class UnAuthorizedException extends CommonException {
 
-    private final HttpStatus status = HttpStatus.UNAUTHORIZED;
-    private final String code = "401";
-
     public UnAuthorizedException(String message) {
-        super(message);
+        super(HttpStatus.UNAUTHORIZED, "401", message);
     }
 }
