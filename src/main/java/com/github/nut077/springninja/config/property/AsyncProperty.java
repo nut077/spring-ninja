@@ -18,7 +18,6 @@ import java.time.Duration;
 @ConfigurationProperties("custom.async")
 @Component
 public class AsyncProperty {
-
     // จะใช้การ validate ได้ต้องใส annotation @Validated ที่ข้างบน class
     @NotNull
     @Min(1)
